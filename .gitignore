@@ -1,6 +1,52 @@
+### C++ template
+# Prerequisites
+*.d
 
-.vs/embeddedSoftware/FileContentIndex/
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
 
-.vs/embeddedSoftware/v17/
+# Precompiled Headers
+*.gch
+*.pch
 
-.vs/
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+### CMake template
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+CMakeUserPresets.json
+cmake-build-*
+
+
+.idea
+*.pdf
