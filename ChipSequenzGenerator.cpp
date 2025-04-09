@@ -8,7 +8,7 @@ ChipSequenzGenerator::ChipSequenzGenerator(const unsigned int firstExtractPoint,
     std::ranges::fill(register2, true);
 }
 
-bool ChipSequenzGenerator::getNext() {
+int ChipSequenzGenerator::getNext() {
     const bool extractedValue1 = register2.at(this->firstExtractPoint - 1);
     const bool extractedValue2 = register2.at(this->secondExtractPoint - 1);
     const bool valueReg1 = register1.at(REG_SIZE - 1);
@@ -18,7 +18,7 @@ bool ChipSequenzGenerator::getNext() {
     this->nextRegister1();
     this->nextRegister2();
 
-    return finishedValue;
+    return finishedValue ? 1 : -1;
 }
 
 

@@ -10,7 +10,7 @@ class ChipSequenzGenerator {
 public:
     ChipSequenzGenerator(unsigned int firstExtractPoint, unsigned int secondExtractPoint);
 
-    bool getNext();
+    int getNext();
 
 private:
     void nextRegister1();
