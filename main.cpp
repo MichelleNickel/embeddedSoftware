@@ -1,9 +1,9 @@
 #include <array>
+#include <chrono>// Runtime analysis
 #include <format>
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <chrono> // Runtime analysis
 
 
 #include "Analyser.h"
@@ -62,18 +62,18 @@ int main(int argc, char **argv) {
 
     // Read Signal from File into array<int, 1023>
     std::string filename = argv[1];
-    
-    auto startSignal = std::chrono::high_resolution_clock::now(); // Runtime analysis
-    array<int, 1023> signal = readSignal(filename);
-    auto endSignal = std::chrono::high_resolution_clock::now(); // Runtime analysis
 
-    // Generate 24 ChipSequences 
-    auto startGen = std::chrono::high_resolution_clock::now(); // Runtime analysis
+    auto startSignal = std::chrono::high_resolution_clock::now();// Runtime analysis
+    array<int, 1023> signal = readSignal(filename);
+    auto endSignal = std::chrono::high_resolution_clock::now();// Runtime analysis
+
+    // Generate 24 ChipSequences
+    auto startGen = std::chrono::high_resolution_clock::now();// Runtime analysis
     const array<array<int, 1023>, 24> chipSequences = generateChipSequences();
-    auto endGen = std::chrono::high_resolution_clock::now(); // Runtime analysis
+    auto endGen = std::chrono::high_resolution_clock::now();// Runtime analysis
 
     // Check if a chipsequence is in the signal (check if a bit was sent)
-    auto startAnalyse = std::chrono::high_resolution_clock::now(); // Runtime analysis
+    auto startAnalyse = std::chrono::high_resolution_clock::now();// Runtime analysis
     for (int i = 0; i < chipSequences.size(); i++) {
         const auto calcResult = Analyser::getBit(signal, chipSequences.at(i));
 
@@ -83,16 +83,16 @@ int main(int argc, char **argv) {
         const Result result = calcResult.value();
         std::cout << std::format("Satellite {} has sent bit {} (delta = {})", i + 1, result.foundBit ? 1 : 0, result.delta) << std::endl;
     }
-    auto endAnalyse = std::chrono::high_resolution_clock::now(); // Runtime analysis
+    auto endAnalyse = std::chrono::high_resolution_clock::now();// Runtime analysis
 
     //-----------------------------Runtime analysis
     std::chrono::duration<double> durSignal = endSignal - startSignal;
     std::chrono::duration<double> durGen = endGen - startGen;
     std::chrono::duration<double> durAnalyse = endAnalyse - startAnalyse;
 
-    std::cout << "Signal reading time: " << durSignal.count() << "s\n";
-    std::cout << "Chip generation time: " << durGen.count() << "s\n";
-    std::cout << "Analysis time: " << durAnalyse.count() << "s\n";
+    std::cout << "Signal reading time: " << std::chrono::duration_cast<std::chrono::microseconds>(durSignal).count() << "us\n";
+    std::cout << "Chip generation time: " << std::chrono::duration_cast<std::chrono::microseconds>(durGen).count() << "us\n";
+    std::cout << "Analysis time: " << std::chrono::duration_cast<std::chrono::microseconds>(durAnalyse).count() << "us\n";
     //-----------------------------
 
     return 0;
