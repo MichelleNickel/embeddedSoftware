@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <chrono> // Runtime analysis
 
 
 #include "Analyser.h"
@@ -52,18 +53,27 @@ array<int, 1023> readSignal(std::string fileName) {
 
 
 int main(int argc, char **argv) {
-    // Sicherstellen, dass ein Parameter angegeben wurde (Dateiname)
+    // Make sure a Filename was given by the user
     if (argc < 2) {
         std::cerr << "Error! Filename of signal missing." << std::endl;
         std::cerr << "Usage: " << argv[0] << " <signal-file>" << std::endl;
         return 1;
     }
 
+    // Read Signal from File into array<int, 1023>
     std::string filename = argv[1];
+    
+    auto startSignal = std::chrono::high_resolution_clock::now(); // Runtime analysis
     array<int, 1023> signal = readSignal(filename);
+    auto endSignal = std::chrono::high_resolution_clock::now(); // Runtime analysis
 
+    // Generate 24 ChipSequences 
+    auto startGen = std::chrono::high_resolution_clock::now(); // Runtime analysis
     const array<array<int, 1023>, 24> chipSequences = generateChipSequences();
+    auto endGen = std::chrono::high_resolution_clock::now(); // Runtime analysis
 
+    // Check if a chipsequence is in the signal (check if a bit was sent)
+    auto startAnalyse = std::chrono::high_resolution_clock::now(); // Runtime analysis
     for (int i = 0; i < chipSequences.size(); i++) {
         const auto calcResult = Analyser::getBit(signal, chipSequences.at(i));
 
@@ -73,6 +83,17 @@ int main(int argc, char **argv) {
         const Result result = calcResult.value();
         std::cout << std::format("Satellite {} has sent bit {} (delta = {})", i + 1, result.foundBit ? 1 : 0, result.delta) << std::endl;
     }
+    auto endAnalyse = std::chrono::high_resolution_clock::now(); // Runtime analysis
+
+    //-----------------------------Runtime analysis
+    std::chrono::duration<double> durSignal = endSignal - startSignal;
+    std::chrono::duration<double> durGen = endGen - startGen;
+    std::chrono::duration<double> durAnalyse = endAnalyse - startAnalyse;
+
+    std::cout << "Signal reading time: " << durSignal.count() << "s\n";
+    std::cout << "Chip generation time: " << durGen.count() << "s\n";
+    std::cout << "Analysis time: " << durAnalyse.count() << "s\n";
+    //-----------------------------
 
     return 0;
 }

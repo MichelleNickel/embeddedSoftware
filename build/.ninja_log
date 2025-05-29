@@ -1,0 +1,8 @@
+# ninja log v6
+1394	1495	7702153518987743	Embedded_Software.exe	770c66ee5cde0269
+22	1394	7702153505257644	CMakeFiles/Embedded_Software.dir/main.cpp.obj	60f02b6ee0a924b4
+1	100	7702156714993320	build.ninja	78095fa2639f5467
+25	437	7702153505287668	CMakeFiles/Embedded_Software.dir/ChipSequenzGenerator.cpp.obj	c031c159862f9602
+28	438	7702153505317652	CMakeFiles/Embedded_Software.dir/Analyser.cpp.obj	70beb4c5aebd7ce8
+13	1398	7702156750280981	CMakeFiles/Embedded_Software.dir/main.cpp.obj	60f02b6ee0a924b4
+1398	1484	7702156764126573	Embedded_Software.exe	770c66ee5cde0269
