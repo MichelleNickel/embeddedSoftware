@@ -72,10 +72,17 @@ int main(int argc, char **argv) {
     const array<array<int, 1023>, 24> chipSequences = generateChipSequences();
     auto endGen = std::chrono::high_resolution_clock::now();// Runtime analysis
 
+    array<int, 2046> tmp{};
+
+    for(size_t i = 0; i< signal.size(); i++){
+        tmp[i] = signal.at(i);
+        tmp[i+signal.size()] = signal.at(i);
+    }
+
     // Check if a chipsequence is in the signal (check if a bit was sent)
     auto startAnalyse = std::chrono::high_resolution_clock::now();// Runtime analysis
     for (int i = 0; i < chipSequences.size(); i++) {
-        const auto calcResult = Analyser::getBit(signal, chipSequences.at(i));
+        const auto calcResult = Analyser::getBit(tmp, chipSequences.at(i));
 
         if (!calcResult.has_value())
             continue;

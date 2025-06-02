@@ -16,7 +16,7 @@ struct Result {
 
 class Analyser {
 public:
-    static std::optional<Result> getBit(const array<int, 1023> &signal, const array<int, 1023> &chipSequence);
+    static std::optional<Result> getBit(const array<int, 2046> &signal, const array<int, 1023> &chipSequence);
 
 private:
     static int multiply(const array<int, 1023> &arr1, const array<int, 1023> &arr2);
